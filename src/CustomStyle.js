@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
-import Sketch from 'react-p5';
-import MersenneTwister from 'mersenne-twister';
+import React, { useRef } from "react";
+import Sketch from "react-p5";
+import MersenneTwister from "mersenne-twister";
 
 /*
 Create your Custom style to be turned into a EthBlock.art Mother NFT
@@ -36,8 +36,9 @@ const CustomStyle = ({
   handleResize,
   mod1 = 0.75, // Example: replace any number in the code with mod1, mod2, or color values
   mod2 = 0.25,
-  color1 = '#4f83f1',
-  background = '#ccc',
+  color1 = "#4f83f1",
+  background = "#ccc",
+  facesImg
 }) => {
   const shuffleBag = useRef();
   const hoistedValue = useRef();
@@ -50,6 +51,12 @@ const CustomStyle = ({
     let _p5 = p5.createCanvas(width, height).parent(canvasParentRef);
     canvasRef.current = p5;
 
+    //p5.loadImage("./images/iegenfacesScale.jpg", img => {
+    //  this.facesImg = img;
+    //  p5.redraw(); // <- only if you're running with noLoop()
+    //});
+    facesImg = p5.loadImage("./images/eigenfacesScale.jpg");
+
     attributesRef.current = () => {
       return {
         // This is called when the final image is generated, when creator opens the Mint NFT modal.
@@ -59,16 +66,16 @@ const CustomStyle = ({
 
         attributes: [
           {
-            display_type: 'number',
-            trait_type: 'your trait here number',
-            value: hoistedValue.current, // using the hoisted value from within the draw() method, stored in the ref.
+            display_type: "number",
+            trait_type: "your trait here number",
+            value: hoistedValue.current // using the hoisted value from within the draw() method, stored in the ref.
           },
 
           {
-            trait_type: 'your trait here text',
-            value: 'replace me',
-          },
-        ],
+            trait_type: "your trait here text",
+            value: "replace me"
+          }
+        ]
       };
     };
   };
@@ -88,8 +95,14 @@ const CustomStyle = ({
     let DIM = Math.min(WIDTH, HEIGHT);
     let M = DIM / DEFAULT_SIZE;
 
-    p5.background(background);
-
+    //p5.background(background);
+    //p5.loadImage("./images/iegenfacesScale.jpg", img => {
+    //  image(img, 0, 0);
+    //});
+    p5.image(facesImg, 0, height / 2, facesImg.width / 2, facesImg.height / 2);
+    //    if (this.facesImg) {
+    //      p5.image(this.facesImg, 0, 0);
+    //    }
     // reset shuffle bag
     let seed = parseInt(hash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwister(seed);
@@ -98,22 +111,22 @@ const CustomStyle = ({
       return {
         y: shuffleBag.current.random(),
         x: shuffleBag.current.random(),
-        radius: seed / 1000000000000000,
+        radius: seed / 1000000000000000
       };
     });
 
     // example assignment of hoisted value to be used as NFT attribute later
     hoistedValue.current = 42;
 
-    objs.map((dot, i) => {
-      p5.stroke(color1);
-      p5.strokeWeight(1 + mod2 * 10);
-      p5.ellipse(
-        200 * dot.y * 6 * M,
-        100 * dot.x * 6 * M,
-        dot.radius * M * mod1
-      );
-    });
+    //objs.map((dot, i) => {
+    //  p5.stroke(color1);
+    //  p5.strokeWeight(1 + mod2 * 10);
+    //  p5.ellipse(
+    //    200 * dot.y * 6 * M,
+    //    100 * dot.x * 6 * M,
+    //    dot.radius * M * mod1
+    //  );
+    //});
   };
 
   return <Sketch setup={setup} draw={draw} windowResized={handleResize} />;
@@ -122,16 +135,16 @@ const CustomStyle = ({
 export default CustomStyle;
 
 const styleMetadata = {
-  name: '',
-  description: '',
-  image: '',
-  creator_name: '',
+  name: "",
+  description: "",
+  image: "",
+  creator_name: "",
   options: {
     mod1: 0.4,
     mod2: 0.1,
-    color1: '#fff000',
-    background: '#000000',
-  },
+    color1: "#fff000",
+    background: "#000000"
+  }
 };
 
 export { styleMetadata };
