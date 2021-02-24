@@ -47,9 +47,11 @@ const CustomStyle = ({
   const { hash } = block;
 
   const preload = (p5) => {
-    facesImg = p5.createImg(
-      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Leonardo_da_Vinci_-_Portrait_of_a_Musician_-_Pinacoteca_Ambrosiana.jpg"
-    );
+    //facesImg = p5.createImg(
+    //  "https://upload.wikimedia.org/wikipedia/commons/6/6a/Leonardo_da_Vinci_-_Portrait_of_a_Musician_-_Pinacoteca_Ambrosiana.jpg"
+    //);
+
+    facesImg = p5.loadImage("./images/eigenfacesScale.jpg");
     show = true;
   };
 
