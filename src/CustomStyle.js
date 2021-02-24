@@ -27,8 +27,9 @@ Getting started:
 */
 
 let DEFAULT_SIZE = 500;
+let facesImg;
+let show = false;
 const CustomStyle = ({
-  facesImg,
   block,
   canvasRef,
   attributesRef,
@@ -46,10 +47,10 @@ const CustomStyle = ({
   const { hash } = block;
 
   const preload = (p5) => {
-    //facesImg = p5.loadImage('https://static-cdn.jtvnw.net/jtv_user_pictures/hsdogdog-profile_image-5550ade194780dfc-300x300.jpeg')
     facesImg = p5.createImg(
-      "http://www.petwebsite.com/hamsters/hamsters_images/syrian-hamster_000008437184.jpg"
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/Leonardo_da_Vinci_-_Portrait_of_a_Musician_-_Pinacoteca_Ambrosiana.jpg"
     );
+    show = true;
   };
 
   // setup() initializes p5 and the canvas element, can be mostly ignored in our case (check draw())
@@ -57,14 +58,6 @@ const CustomStyle = ({
     // Keep reference of canvas element for snapshots
     let _p5 = p5.createCanvas(width, height).parent(canvasParentRef);
     canvasRef.current = p5;
-
-    //p5.loadImage("./images/iegenfacesScale.jpg", img => {
-    //  this.facesImg = img;
-    //  p5.redraw(); // <- only if you're running with noLoop()
-    //});
-    //facesImg = p5.loadImage("./images/eigenfacesScale.jpg");
-    //facesImg = p5.createImg('http://www.petwebsite.com/hamsters/hamsters_images/syrian-hamster_000008437184.jpg');
-    //facesImg.hide();
 
     attributesRef.current = () => {
       return {
@@ -104,17 +97,7 @@ const CustomStyle = ({
     let DIM = Math.min(WIDTH, HEIGHT);
     let M = DIM / DEFAULT_SIZE;
 
-    //p5.background(background);
-    //p5.loadImage("./images/eigenfacesScale.jpg", img => {
-    //  image(img, 0, 0);
-    //});
-    //if (facesImg) {
-    p5.image(facesImg, 0, height / 2, facesImg.width / 2, facesImg.height / 2);
-    //}
-    //    if (this.facesImg) {
-    //      p5.image(this.facesImg, 0, 0);
-    //    }
-    //p5.redraw();
+    p5.image(facesImg, 0, 0, facesImg.width / 2, facesImg.height / 2);
 
     // reset shuffle bag
     let seed = parseInt(hash.slice(0, 16), 16);
@@ -131,18 +114,27 @@ const CustomStyle = ({
     // example assignment of hoisted value to be used as NFT attribute later
     hoistedValue.current = 42;
 
-    objs.map((dot, i) => {
-      p5.stroke(color1);
-      p5.strokeWeight(1 + mod2 * 10);
-      p5.ellipse(
-        200 * dot.y * 6 * M,
-        100 * dot.x * 6 * M,
-        dot.radius * M * mod1
-      );
-    });
+    if (show) {
+      objs.map((dot, i) => {
+        p5.stroke(color1);
+        p5.strokeWeight(1 + mod2 * 10);
+        p5.ellipse(
+          200 * dot.y * 6 * M,
+          100 * dot.x * 6 * M,
+          dot.radius * M * mod1
+        );
+      });
+    }
   };
 
-  return <Sketch setup={setup} draw={draw} windowResized={handleResize} />;
+  return (
+    <Sketch
+      preload={preload}
+      setup={setup}
+      draw={draw}
+      windowResized={handleResize}
+    />
+  );
 };
 
 export default CustomStyle;
