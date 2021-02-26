@@ -51,8 +51,23 @@ const CustomStyle = ({
     //  "https://upload.wikimedia.org/wikipedia/commons/6/6a/Leonardo_da_Vinci_-_Portrait_of_a_Musician_-_Pinacoteca_Ambrosiana.jpg"
     //);
 
-    facesImg = p5.loadImage("./images/eigenfacesScale.jpg");
-    show = true;
+    //facesImg = p5.loadImage("./images/eigenfacesScale.jpg");
+    //show = true;
+    img01 = p5.loadImage("./images/1.jpg");
+    img02 = p5.loadImage("./images/2.jpg");
+    img03 = p5.loadImage("./images/3.jpg");
+    img04 = p5.loadImage("./images/4.jpg");
+    img05 = p5.loadImage("./images/5.jpg");
+    img06 = p5.loadImage("./images/6.jpg");
+    img07 = p5.loadImage("./images/7.jpg");
+    img08 = p5.loadImage("./images/8.jpg");
+    img09 = p5.loadImage("./images/9.jpg");
+    img10 = p5.loadImage("./images/10.jpg");
+    img11 = p5.loadImage("./images/11.jpg");
+    img12 = p5.loadImage("./images/12.jpg");
+    img13 = p5.loadImage("./images/13.jpg");
+    img14 = p5.loadImage("./images/14.jpg");
+    img15 = p5.loadImage("./images/15.jpg");
   };
 
   // setup() initializes p5 and the canvas element, can be mostly ignored in our case (check draw())
@@ -99,7 +114,14 @@ const CustomStyle = ({
     let DIM = Math.min(WIDTH, HEIGHT);
     let M = DIM / DEFAULT_SIZE;
 
-    p5.image(facesImg, 0, 0, facesImg.width / 2, facesImg.height / 2);
+    //p5.background(img01);
+    p5.image(img01, 0, 0);
+    //p5.image(img02,0,0);
+
+    p5.blend(img02, 0, 0, 39, 39, 0, 0, 39, 39, p5.ADD);
+    //p5.image(img01,0,0,img01.width,img01.height);
+    //p5.image(img02,0,0,img02.width,img02.height);
+    //p5.image(facesImg, 0, 0, facesImg.width / 2, facesImg.height / 2);
 
     // reset shuffle bag
     let seed = parseInt(hash.slice(0, 16), 16);
