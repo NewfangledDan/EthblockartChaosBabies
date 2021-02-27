@@ -1,5 +1,5 @@
-import React from 'react';
-import './ControlSlider.css';
+import React from "react";
+import "./ControlSlider.css";
 
 const ControlSlider = function (props) {
   const handleModChange = (event) => {

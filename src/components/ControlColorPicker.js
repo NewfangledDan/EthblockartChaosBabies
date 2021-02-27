@@ -1,5 +1,5 @@
-import React from 'react';
-import './ControlColorPicker.css';
+import React from "react";
+import "./ControlColorPicker.css";
 
 const ControlColorPicker = function (props) {
   const handleColorChange = (event) => {

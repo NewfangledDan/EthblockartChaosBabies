@@ -1,13 +1,13 @@
-import ReactDOM from 'react-dom';
-import React, { useRef, useState } from 'react';
-import useDimensions from 'react-cool-dimensions';
-import blocks from './blocks';
-import CustomStyle, { styleMetadata } from './CustomStyle';
-import Sidebar from './components/Sidebar';
-import { proxy, useProxy } from 'valtio';
+import ReactDOM from "react-dom";
+import React, { useRef, useState } from "react";
+import useDimensions from "react-cool-dimensions";
+import blocks from "./blocks";
+import CustomStyle, { styleMetadata } from "./CustomStyle";
+import Sidebar from "./components/Sidebar";
+import { proxy, useProxy } from "valtio";
 
 const store = proxy({
-  ...styleMetadata,
+  ...styleMetadata
 });
 
 /*
@@ -31,20 +31,20 @@ function App() {
       value: snap.options[k],
       set: (v) => {
         store.options[k] = v;
-      },
+      }
     };
   });
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
       <div style={{ flexGrow: 1 }}>
         <div
           ref={ref}
           style={{
-            margin: '0 auto',
-            marginTop: '64px',
-            width: '60vw',
-            height: '60vw',
+            margin: "0 auto",
+            marginTop: "64px",
+            width: "60vw",
+            height: "60vw"
           }}
         >
           <h3>EthBlock.art P5.js boilerplate</h3>
@@ -79,5 +79,5 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

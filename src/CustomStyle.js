@@ -27,8 +27,23 @@ Getting started:
 */
 
 let DEFAULT_SIZE = 500;
-let facesImg;
 let show = false;
+let img01;
+let img02;
+let img03;
+let img04;
+let img05;
+let img06;
+let img07;
+let img08;
+let img09;
+let img10;
+let img11;
+let img12;
+let img13;
+let img14;
+let img15;
+
 const CustomStyle = ({
   block,
   canvasRef,
@@ -47,12 +62,6 @@ const CustomStyle = ({
   const { hash } = block;
 
   const preload = (p5) => {
-    //facesImg = p5.createImg(
-    //  "https://upload.wikimedia.org/wikipedia/commons/6/6a/Leonardo_da_Vinci_-_Portrait_of_a_Musician_-_Pinacoteca_Ambrosiana.jpg"
-    //);
-
-    //facesImg = p5.loadImage("./images/eigenfacesScale.jpg");
-    //show = true;
     img01 = p5.loadImage("./images/1.jpg");
     img02 = p5.loadImage("./images/2.jpg");
     img03 = p5.loadImage("./images/3.jpg");
@@ -114,41 +123,115 @@ const CustomStyle = ({
     let DIM = Math.min(WIDTH, HEIGHT);
     let M = DIM / DEFAULT_SIZE;
 
-    //p5.background(img01);
-    p5.image(img01, 0, 0);
-    //p5.image(img02,0,0);
-
-    p5.blend(img02, 0, 0, 39, 39, 0, 0, 39, 39, p5.ADD);
-    //p5.image(img01,0,0,img01.width,img01.height);
-    //p5.image(img02,0,0,img02.width,img02.height);
-    //p5.image(facesImg, 0, 0, facesImg.width / 2, facesImg.height / 2);
-
     // reset shuffle bag
     let seed = parseInt(hash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwister(seed);
-    let objs = block.transactions.map((t) => {
-      let seed = parseInt(t.hash.slice(0, 16), 16);
-      return {
-        y: shuffleBag.current.random(),
-        x: shuffleBag.current.random(),
-        radius: seed / 1000000000000000
-      };
-    });
+    //let x01 = Math.abs(shuffleBag.current.random());
+    //let x02 = Math.abs(shuffleBag.current.random());
+    //let x03 = Math.abs(shuffleBag.current.random());
+    //let x04 = Math.abs(shuffleBag.current.random());
+    //let x05 = Math.abs(shuffleBag.current.random());
+    //let x06 = Math.abs(shuffleBag.current.random());
+    //let x07 = Math.abs(shuffleBag.current.random());
+    //let x08 = Math.abs(shuffleBag.current.random());
+    //let x09 = Math.abs(shuffleBag.current.random());
+    //let x10 = Math.abs(shuffleBag.current.random());
+    //let x11 = Math.abs(shuffleBag.current.random());
+    //let x12 = Math.abs(shuffleBag.current.random());
+    //let x13 = Math.abs(shuffleBag.current.random());
+    //let x14 = Math.abs(shuffleBag.current.random());
+    //let x15 = Math.abs(shuffleBag.current.random());
+    let x01 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x02 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x03 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x04 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x05 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x06 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x07 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x08 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x09 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x10 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x11 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x12 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x13 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x14 = 2.0 * shuffleBag.current.random() - 1.0;
+    let x15 = 2.0 * shuffleBag.current.random() - 1.0;
+    let norm =
+      (4.0 * mod1) /
+      (x01 +
+        x02 +
+        x03 +
+        x04 +
+        x05 +
+        x06 +
+        x07 +
+        x08 +
+        x09 +
+        x10 +
+        x11 +
+        x12 +
+        x13 +
+        x14 +
+        x15);
+
+    let img = img01;
+    img01.loadPixels();
+    img02.loadPixels();
+    img03.loadPixels();
+    img04.loadPixels();
+    img05.loadPixels();
+    img06.loadPixels();
+    img07.loadPixels();
+    img08.loadPixels();
+    img09.loadPixels();
+    img10.loadPixels();
+    img11.loadPixels();
+    img12.loadPixels();
+    img13.loadPixels();
+    img14.loadPixels();
+    img15.loadPixels();
+    img.loadPixels();
+    //let d = p5.pixelDensity();
+    let d = 1;
+    let imageSize = 4 * (img.width * d) * (img.height * d);
+    for (let i = 0; i < imageSize; i += 1) {
+      img.pixels[i] = norm * x01 * img01.pixels[i];
+      img.pixels[i] += norm * x02 * img02.pixels[i];
+      img.pixels[i] += norm * x03 * img03.pixels[i];
+      img.pixels[i] += norm * x04 * img04.pixels[i];
+      img.pixels[i] += norm * x05 * img05.pixels[i];
+      img.pixels[i] += norm * x06 * img06.pixels[i];
+      img.pixels[i] += norm * x07 * img07.pixels[i];
+      img.pixels[i] += norm * x08 * img08.pixels[i];
+      img.pixels[i] += norm * x09 * img09.pixels[i];
+      img.pixels[i] += norm * x10 * img10.pixels[i];
+      img.pixels[i] += norm * x11 * img11.pixels[i];
+      img.pixels[i] += norm * x12 * img12.pixels[i];
+      img.pixels[i] += norm * x13 * img13.pixels[i];
+      img.pixels[i] += norm * x14 * img14.pixels[i];
+      img.pixels[i] += norm * x15 * img15.pixels[i];
+
+      //img.pixels[i] = img02.pixels[i];
+    }
+    img.updatePixels();
+
+    p5.background(img01);
+    //p5.image(img, 0, 0);
 
     // example assignment of hoisted value to be used as NFT attribute later
     hoistedValue.current = 42;
 
-    if (show) {
-      objs.map((dot, i) => {
-        p5.stroke(color1);
-        p5.strokeWeight(1 + mod2 * 10);
-        p5.ellipse(
-          200 * dot.y * 6 * M,
-          100 * dot.x * 6 * M,
-          dot.radius * M * mod1
-        );
-      });
-    }
+    //if (show) {
+    //  objs.map((dot, i) => {
+    //    p5.stroke(color1);
+    //    p5.strokeWeight(1 + mod2 * 10);
+    //    p5.ellipse(
+    //      200 * dot.y * 6 * M,
+    //      100 * dot.x * 6 * M,
+    //      dot.radius * M * mod1
+    //    );
+    //  });
+    //}
   };
 
   return (
