@@ -28,21 +28,8 @@ Getting started:
 
 let DEFAULT_SIZE = 500;
 let show = false;
-let img01;
-let img02;
-let img03;
-let img04;
-let img05;
-let img06;
-let img07;
-let img08;
-let img09;
-let img10;
-let img11;
-let img12;
-let img13;
-let img14;
-let img15;
+let imgs = [];
+//let NUMFACES = 15;
 
 const CustomStyle = ({
   block,
@@ -52,7 +39,8 @@ const CustomStyle = ({
   height,
   handleResize,
   mod1 = 0.75, // Example: replace any number in the code with mod1, mod2, or color values
-  mod2 = 0.25,
+  mod2 = 1.0,
+  mod3 = 1.0,
   color1 = "#4f83f1",
   background = "#ccc"
 }) => {
@@ -62,21 +50,31 @@ const CustomStyle = ({
   const { hash } = block;
 
   const preload = (p5) => {
-    img01 = p5.loadImage("./images/1.jpg");
-    img02 = p5.loadImage("./images/2.jpg");
-    img03 = p5.loadImage("./images/3.jpg");
-    img04 = p5.loadImage("./images/4.jpg");
-    img05 = p5.loadImage("./images/5.jpg");
-    img06 = p5.loadImage("./images/6.jpg");
-    img07 = p5.loadImage("./images/7.jpg");
-    img08 = p5.loadImage("./images/8.jpg");
-    img09 = p5.loadImage("./images/9.jpg");
-    img10 = p5.loadImage("./images/10.jpg");
-    img11 = p5.loadImage("./images/11.jpg");
-    img12 = p5.loadImage("./images/12.jpg");
-    img13 = p5.loadImage("./images/13.jpg");
-    img14 = p5.loadImage("./images/14.jpg");
-    img15 = p5.loadImage("./images/15.jpg");
+    imgs.push(p5.loadImage("./images/01.jpg"));
+    imgs.push(p5.loadImage("./images/02.jpg"));
+    imgs.push(p5.loadImage("./images/03.jpg"));
+    imgs.push(p5.loadImage("./images/04.jpg"));
+    imgs.push(p5.loadImage("./images/05.jpg"));
+    imgs.push(p5.loadImage("./images/06.jpg"));
+    imgs.push(p5.loadImage("./images/07.jpg"));
+    imgs.push(p5.loadImage("./images/08.jpg"));
+    imgs.push(p5.loadImage("./images/09.jpg"));
+    imgs.push(p5.loadImage("./images/10.jpg"));
+    imgs.push(p5.loadImage("./images/11.jpg"));
+    imgs.push(p5.loadImage("./images/12.jpg"));
+    imgs.push(p5.loadImage("./images/13.jpg"));
+    imgs.push(p5.loadImage("./images/14.jpg"));
+    imgs.push(p5.loadImage("./images/15.jpg"));
+    imgs.push(p5.loadImage("./images/16.jpg"));
+    imgs.push(p5.loadImage("./images/17.jpg"));
+    imgs.push(p5.loadImage("./images/18.jpg"));
+    imgs.push(p5.loadImage("./images/19.jpg"));
+    imgs.push(p5.loadImage("./images/20.jpg"));
+    imgs.push(p5.loadImage("./images/21.jpg"));
+    imgs.push(p5.loadImage("./images/22.jpg"));
+    imgs.push(p5.loadImage("./images/23.jpg"));
+    imgs.push(p5.loadImage("./images/24.jpg"));
+    imgs.push(p5.loadImage("./images/25.jpg"));
   };
 
   // setup() initializes p5 and the canvas element, can be mostly ignored in our case (check draw())
@@ -123,6 +121,8 @@ const CustomStyle = ({
     let DIM = Math.min(WIDTH, HEIGHT);
     let M = DIM / DEFAULT_SIZE;
 
+    let NUMFACES = mod3 * imgs.length;
+
     // reset shuffle bag
     let seed = parseInt(hash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwister(seed);
@@ -141,81 +141,35 @@ const CustomStyle = ({
     //let x13 = Math.abs(shuffleBag.current.random());
     //let x14 = Math.abs(shuffleBag.current.random());
     //let x15 = Math.abs(shuffleBag.current.random());
-    let x01 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x02 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x03 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x04 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x05 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x06 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x07 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x08 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x09 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x10 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x11 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x12 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x13 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x14 = 2.0 * shuffleBag.current.random() - 1.0;
-    let x15 = 2.0 * shuffleBag.current.random() - 1.0;
-    let norm =
-      (4.0 * mod1) /
-      (x01 +
-        x02 +
-        x03 +
-        x04 +
-        x05 +
-        x06 +
-        x07 +
-        x08 +
-        x09 +
-        x10 +
-        x11 +
-        x12 +
-        x13 +
-        x14 +
-        x15);
+    let x = [];
+    let xSum = 0;
+    for (let i = 0; i < NUMFACES; i += 1) {
+      let temp = (1.0 + mod2) * shuffleBag.current.random() - mod2;
+      x.push(temp);
+      xSum += temp;
+      //xSum += Math.abs(temp);
+      //xSum += 0.0625;
+    }
+    //xSum = 1.0;
+    let norm = (4.0 * mod1) / xSum;
 
-    let img = img01;
-    img01.loadPixels();
-    img02.loadPixels();
-    img03.loadPixels();
-    img04.loadPixels();
-    img05.loadPixels();
-    img06.loadPixels();
-    img07.loadPixels();
-    img08.loadPixels();
-    img09.loadPixels();
-    img10.loadPixels();
-    img11.loadPixels();
-    img12.loadPixels();
-    img13.loadPixels();
-    img14.loadPixels();
-    img15.loadPixels();
-    img.loadPixels();
+    let base = p5.createImage(imgs[0].width, imgs[0].height);
+    for (let i = 0; i < NUMFACES; i += 1) {
+      imgs[i].loadPixels();
+    }
+    base.loadPixels();
     //let d = p5.pixelDensity();
     let d = 1;
-    let imageSize = 4 * (img.width * d) * (img.height * d);
-    for (let i = 0; i < imageSize; i += 1) {
-      img.pixels[i] = norm * x01 * img01.pixels[i];
-      img.pixels[i] += norm * x02 * img02.pixels[i];
-      img.pixels[i] += norm * x03 * img03.pixels[i];
-      img.pixels[i] += norm * x04 * img04.pixels[i];
-      img.pixels[i] += norm * x05 * img05.pixels[i];
-      img.pixels[i] += norm * x06 * img06.pixels[i];
-      img.pixels[i] += norm * x07 * img07.pixels[i];
-      img.pixels[i] += norm * x08 * img08.pixels[i];
-      img.pixels[i] += norm * x09 * img09.pixels[i];
-      img.pixels[i] += norm * x10 * img10.pixels[i];
-      img.pixels[i] += norm * x11 * img11.pixels[i];
-      img.pixels[i] += norm * x12 * img12.pixels[i];
-      img.pixels[i] += norm * x13 * img13.pixels[i];
-      img.pixels[i] += norm * x14 * img14.pixels[i];
-      img.pixels[i] += norm * x15 * img15.pixels[i];
-
-      //img.pixels[i] = img02.pixels[i];
+    let imageSize = 4 * (base.width * d) * (base.height * d);
+    for (let im = 0; im < NUMFACES; im += 1) {
+      for (let i = 0; i < imageSize; i += 1) {
+        //base.pixels[i] += norm * x[im] * imgs[im].pixels[i];
+        base.pixels[i] += norm * x[im] * imgs[im].pixels[i];
+      }
     }
-    img.updatePixels();
+    base.updatePixels();
 
-    p5.background(img01);
+    p5.background(base);
     //p5.image(img, 0, 0);
 
     // example assignment of hoisted value to be used as NFT attribute later
@@ -253,7 +207,8 @@ const styleMetadata = {
   creator_name: "",
   options: {
     mod1: 0.4,
-    mod2: 0.1,
+    mod2: 1.0,
+    mod3: 1.0,
     color1: "#fff000",
     background: "#000000"
   }
