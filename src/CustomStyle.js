@@ -191,6 +191,19 @@ const CustomStyle = ({
     p5.rect(width - off, height - off, off, height - off - weight);
     p5.rect(off, height - off, off + weight, off);
 
+    //Series
+    let textHeight = 12;
+    p5.textSize(textHeight);
+    let seriesString = "1/500";
+    p5.textFont("Lato");
+    p5.textStyle(p5.BOLDITALIC);
+    let seriesWidth = p5.textWidth(seriesString);
+    p5.fill(150, 150, 150);
+    p5.text(
+      "1/500",
+      width - off - weight - seriesWidth,
+      height - off - (weight - textHeight)
+    );
     // example assignment of hoisted value to be used as NFT attribute later
     hoistedValue.current = 42;
 
