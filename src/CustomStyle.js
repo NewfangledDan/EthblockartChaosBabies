@@ -124,24 +124,23 @@ const CustomStyle = ({
 
     let MINFACES = 5;
     let NUMFACES = MINFACES + Math.floor(mod3 * (imgs.length - MINFACES));
-    let xFade =
-      MINFACES + Math.floor(mod3 * (imgs.length - MINFACES)) - NUMFACES;
+    let xFade = MINFACES + mod3 * (imgs.length - MINFACES) - NUMFACES;
 
     // reset shuffle bag
     let seed = parseInt(hash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwister(seed);
     let x = [];
     let xSum = 0;
-    for (let i = 0; i < NUMFACES; i += 1) {
+    for (let i = 0; i < NUMFACES - 1; i += 1) {
       let temp = (1.0 + mod2) * shuffleBag.current.random() - mod2;
       x.push(temp);
-      //xSum += temp;
-      xSum += temp * temp;
-      //xSum += Math.abs(temp);
-      //xSum += 0.0625;
+      xSum += temp;
     }
-    xSum = Math.sqrt(xSum);
-    //xSum = 1.0;
+
+    //xFade
+    let temp = (1.0 + mod2) * shuffleBag.current.random() - mod2;
+    x.push(xFade * temp);
+    xSum += xFade * temp;
     let norm = (4.0 * mod1) / xSum;
 
     let base = p5.createImage(imgs[0].width, imgs[0].height);
