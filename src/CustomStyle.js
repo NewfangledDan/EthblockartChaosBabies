@@ -121,26 +121,14 @@ const CustomStyle = ({
     let DIM = Math.min(WIDTH, HEIGHT);
     let M = DIM / DEFAULT_SIZE;
 
-    let NUMFACES = mod3 * imgs.length;
+    let MINFACES = 5;
+    let NUMFACES = MINFACES + Math.floor(mod3 * (imgs.length - MINFACES));
+    let xFade =
+      MINFACES + Math.floor(mod3 * (imgs.length - MINFACES)) - NUMFACES;
 
     // reset shuffle bag
     let seed = parseInt(hash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwister(seed);
-    //let x01 = Math.abs(shuffleBag.current.random());
-    //let x02 = Math.abs(shuffleBag.current.random());
-    //let x03 = Math.abs(shuffleBag.current.random());
-    //let x04 = Math.abs(shuffleBag.current.random());
-    //let x05 = Math.abs(shuffleBag.current.random());
-    //let x06 = Math.abs(shuffleBag.current.random());
-    //let x07 = Math.abs(shuffleBag.current.random());
-    //let x08 = Math.abs(shuffleBag.current.random());
-    //let x09 = Math.abs(shuffleBag.current.random());
-    //let x10 = Math.abs(shuffleBag.current.random());
-    //let x11 = Math.abs(shuffleBag.current.random());
-    //let x12 = Math.abs(shuffleBag.current.random());
-    //let x13 = Math.abs(shuffleBag.current.random());
-    //let x14 = Math.abs(shuffleBag.current.random());
-    //let x15 = Math.abs(shuffleBag.current.random());
     let x = [];
     let xSum = 0;
     for (let i = 0; i < NUMFACES; i += 1) {
