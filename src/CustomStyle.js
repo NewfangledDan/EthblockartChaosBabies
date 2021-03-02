@@ -41,6 +41,7 @@ const CustomStyle = ({
   mod1 = 0.75, // Example: replace any number in the code with mod1, mod2, or color values
   mod2 = 1.0,
   mod3 = 1.0,
+  mod4 = 0.5,
   color1 = "#4f83f1",
   background = "#ccc"
 }) => {
@@ -134,10 +135,12 @@ const CustomStyle = ({
     for (let i = 0; i < NUMFACES; i += 1) {
       let temp = (1.0 + mod2) * shuffleBag.current.random() - mod2;
       x.push(temp);
-      xSum += temp;
+      //xSum += temp;
+      xSum += temp * temp;
       //xSum += Math.abs(temp);
       //xSum += 0.0625;
     }
+    xSum = Math.sqrt(xSum);
     //xSum = 1.0;
     let norm = (4.0 * mod1) / xSum;
 
@@ -157,7 +160,26 @@ const CustomStyle = ({
     }
     base.updatePixels();
 
-    p5.background(base);
+    //Saturation
+    let final = p5.createImage(imgs[0].width, imgs[0].height);
+    let satVal = -2.0 * mod4 + 1.0;
+    final.loadPixels();
+    for (let i = 0; i < imageSize; i += 4) {
+      let grey =
+        0.299 * base.pixels[i] +
+        0.587 * base.pixels[i + 1] +
+        0.114 * base.pixels[i + 2];
+      final.pixels[i] = satVal * grey + (1.0 - satVal) * base.pixels[i];
+      final.pixels[i + 1] = satVal * grey + (1.0 - satVal) * base.pixels[i + 1];
+      final.pixels[i + 2] = satVal * grey + (1.0 - satVal) * base.pixels[i + 2];
+      final.pixels[i + 3] = base.pixels[i + 3];
+    }
+    final.updatePixels();
+
+    //p5.colorMode(p5.HSB);
+    //p5.tint(0,50,50);
+
+    p5.background(final);
     //p5.image(img, 0, 0);
 
     // example assignment of hoisted value to be used as NFT attribute later
@@ -197,6 +219,7 @@ const styleMetadata = {
     mod1: 0.4,
     mod2: 1.0,
     mod3: 1.0,
+    mod4: 0.5,
     color1: "#fff000",
     background: "#000000"
   }
