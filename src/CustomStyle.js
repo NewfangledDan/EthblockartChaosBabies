@@ -181,6 +181,16 @@ const CustomStyle = ({
     p5.background(final);
     //p5.image(img, 0, 0);
 
+    //Frame
+    let off = 5;
+    let weight = 15;
+    p5.fill(0);
+    p5.rectMode(p5.CORNERS);
+    p5.rect(off, off, width - off, off + weight);
+    p5.rect(width - off, off, width - off - weight, height - off);
+    p5.rect(width - off, height - off, off, height - off - weight);
+    p5.rect(off, height - off, off + weight, off);
+
     // example assignment of hoisted value to be used as NFT attribute later
     hoistedValue.current = 42;
 
