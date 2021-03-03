@@ -25,6 +25,9 @@ Getting started:
 
  - check out p5.js documentation for examples!
 */
+/*
+  CustomStyle "Ghosts in the Ether" Copyright Dan Gillespie 2021, All rights reserved
+*/
 
 let imgs = [];
 let baby = false;
@@ -43,9 +46,10 @@ const CustomStyle = ({
   const hoistedValue = useRef();
 
   const { hash } = block;
+  const { parentHash } = block;
 
   const preload = (p5) => {
-    let seed = parseInt(hash.slice(0, 16), 16);
+    let seed = parseInt(parentHash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwister(seed);
     if (shuffleBag.current.random() < 0.001) {
       baby = true;
@@ -231,7 +235,7 @@ const CustomStyle = ({
     //Series
     let textHeight = Math.min(12, weight - 2);
     p5.textSize(textHeight);
-    let seriesString = "1/500";
+    let seriesString = "1/1000";
     //let seriesString = norm;
     //let thing = gasUsed/gasLimit;
     //let seriesString = warpVal.toString();
@@ -243,7 +247,11 @@ const CustomStyle = ({
     } else {
       p5.fill(150, 150, 150);
     }
-    p5.text("CryptoGhoul", off + weight, height - off - (weight - textHeight));
+    p5.text(
+      "Ghosts in the Ether",
+      off + weight,
+      height - off - (weight - textHeight)
+    );
     p5.text(
       seriesString,
       width - off - weight - seriesWidth,
