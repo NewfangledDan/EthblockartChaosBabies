@@ -26,10 +26,7 @@ Getting started:
  - check out p5.js documentation for examples!
 */
 
-let DEFAULT_SIZE = 500;
-let show = false;
 let imgs = [];
-//let NUMFACES = 15;
 
 const CustomStyle = ({
   block,
@@ -39,11 +36,7 @@ const CustomStyle = ({
   height,
   handleResize,
   mod1 = 0.75, // Example: replace any number in the code with mod1, mod2, or color values
-  mod2 = 1.0,
-  mod3 = 1.0,
-  mod4 = 0.5,
-  color1 = "#4f83f1",
-  background = "#ccc"
+  mod4 = 0.5
 }) => {
   const shuffleBag = useRef();
   const hoistedValue = useRef();
@@ -117,43 +110,46 @@ const CustomStyle = ({
   // c) custom parameters creators can customize (mod1, color1)
   // d) final drawing reacting to screen resizing (M)
   const draw = (p5) => {
-    let WIDTH = width;
-    let HEIGHT = height;
-    let DIM = Math.min(WIDTH, HEIGHT);
-    let M = DIM / DEFAULT_SIZE;
-
     let MINFACES = 5;
-    let NUMFACES = MINFACES + Math.floor(mod3 * (imgs.length - MINFACES));
-    let xFade = MINFACES + mod3 * (imgs.length - MINFACES) - NUMFACES;
+    //Number of Eigenfaces used is based on the number of transactions in the block
+    let moreFaces = Math.min(block.transactions.length, imgs.length - MINFACES);
+    //let NUMFACES = MINFACES + Math.floor(mod3 * (imgs.length - MINFACES));
+    let NUMFACES = MINFACES + moreFaces;
+    let xFade = MINFACES + moreFaces - NUMFACES;
 
     // reset shuffle bag
+    let gasUsed = parseInt(block.gasUsed.hex, 16);
+    let gasLimit = parseInt(block.gasLimit.hex, 16);
+    let warp = gasUsed / gasLimit;
+    let warpVal = Math.pow(warp, 64);
+    //let warpVal = warp;
     let seed = parseInt(hash.slice(0, 16), 16);
     shuffleBag.current = new MersenneTwister(seed);
     let x = [];
     let xSum = 0;
     for (let i = 0; i < NUMFACES - 1; i += 1) {
-      let temp = (1.0 + mod2) * shuffleBag.current.random() - mod2;
+      let temp = (1.0 + warpVal) * shuffleBag.current.random() - warpVal;
       x.push(temp);
       xSum += temp;
     }
 
     //xFade
-    let temp = (1.0 + mod2) * shuffleBag.current.random() - mod2;
+    let temp = (1.0 + warpVal) * shuffleBag.current.random() - warpVal;
     x.push(xFade * temp);
     xSum += xFade * temp;
-    let norm = (4.0 * mod1) / xSum;
+    //let norm = Math.min(Math.abs((4.0 * mod1) / xSum),10.0);
+    let norm = Math.abs((7.0 * mod1) / xSum);
+    //let norm = 4.0*Math.abs((4.0 * mod1) / xSum) - 2.0;
 
     let base = p5.createImage(imgs[0].width, imgs[0].height);
     for (let i = 0; i < NUMFACES; i += 1) {
       imgs[i].loadPixels();
     }
     base.loadPixels();
-    //let d = p5.pixelDensity();
     let d = 1;
     let imageSize = 4 * (base.width * d) * (base.height * d);
     for (let im = 0; im < NUMFACES; im += 1) {
       for (let i = 0; i < imageSize; i += 1) {
-        //base.pixels[i] += norm * x[im] * imgs[im].pixels[i];
         base.pixels[i] += norm * x[im] * imgs[im].pixels[i];
       }
     }
@@ -168,15 +164,16 @@ const CustomStyle = ({
         0.299 * base.pixels[i] +
         0.587 * base.pixels[i + 1] +
         0.114 * base.pixels[i + 2];
-      final.pixels[i] = satVal * grey + (1.0 - satVal) * base.pixels[i];
-      final.pixels[i + 1] = satVal * grey + (1.0 - satVal) * base.pixels[i + 1];
-      final.pixels[i + 2] = satVal * grey + (1.0 - satVal) * base.pixels[i + 2];
-      final.pixels[i + 3] = base.pixels[i + 3];
+      let r = satVal * grey + (1.0 - satVal) * base.pixels[i];
+      let g = satVal * grey + (1.0 - satVal) * base.pixels[i + 1];
+      let b = satVal * grey + (1.0 - satVal) * base.pixels[i + 2];
+
+      final.pixels[i] = Math.min(r, 255.0);
+      final.pixels[i + 1] = Math.min(g, 255.0);
+      final.pixels[i + 2] = Math.min(b, 255.0);
+      final.pixels[i + 3] = 255;
     }
     final.updatePixels();
-
-    //p5.colorMode(p5.HSB);
-    //p5.tint(0,50,50);
 
     p5.background(final);
     //p5.image(img, 0, 0);
@@ -195,12 +192,15 @@ const CustomStyle = ({
     let textHeight = 12;
     p5.textSize(textHeight);
     let seriesString = "1/500";
+    //let seriesString = norm;
+    //let thing = gasUsed/gasLimit;
+    //let seriesString = warpVal.toString();
     p5.textFont("Lato");
     p5.textStyle(p5.BOLDITALIC);
     let seriesWidth = p5.textWidth(seriesString);
     p5.fill(150, 150, 150);
     p5.text(
-      "1/500",
+      seriesString,
       width - off - weight - seriesWidth,
       height - off - (weight - textHeight)
     );
@@ -239,11 +239,7 @@ const styleMetadata = {
   creator_name: "",
   options: {
     mod1: 0.4,
-    mod2: 1.0,
-    mod3: 1.0,
-    mod4: 0.5,
-    color1: "#fff000",
-    background: "#000000"
+    mod4: 0.5
   }
 };
 
