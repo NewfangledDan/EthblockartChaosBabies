@@ -27,6 +27,7 @@ Getting started:
 */
 
 let imgs = [];
+let baby = false;
 
 const CustomStyle = ({
   block,
@@ -44,37 +45,68 @@ const CustomStyle = ({
   const { hash } = block;
 
   const preload = (p5) => {
-    imgs.push(p5.loadImage("./images/01.jpg"));
-    imgs.push(p5.loadImage("./images/02.jpg"));
-    imgs.push(p5.loadImage("./images/03.jpg"));
-    imgs.push(p5.loadImage("./images/04.jpg"));
-    imgs.push(p5.loadImage("./images/05.jpg"));
-    imgs.push(p5.loadImage("./images/06.jpg"));
-    imgs.push(p5.loadImage("./images/07.jpg"));
-    imgs.push(p5.loadImage("./images/08.jpg"));
-    imgs.push(p5.loadImage("./images/09.jpg"));
-    imgs.push(p5.loadImage("./images/10.jpg"));
-    imgs.push(p5.loadImage("./images/11.jpg"));
-    imgs.push(p5.loadImage("./images/12.jpg"));
-    imgs.push(p5.loadImage("./images/13.jpg"));
-    imgs.push(p5.loadImage("./images/14.jpg"));
-    imgs.push(p5.loadImage("./images/15.jpg"));
-    imgs.push(p5.loadImage("./images/16.jpg"));
-    imgs.push(p5.loadImage("./images/17.jpg"));
-    imgs.push(p5.loadImage("./images/18.jpg"));
-    imgs.push(p5.loadImage("./images/19.jpg"));
-    imgs.push(p5.loadImage("./images/20.jpg"));
-    imgs.push(p5.loadImage("./images/21.jpg"));
-    imgs.push(p5.loadImage("./images/22.jpg"));
-    imgs.push(p5.loadImage("./images/23.jpg"));
-    imgs.push(p5.loadImage("./images/24.jpg"));
-    imgs.push(p5.loadImage("./images/25.jpg"));
+    let seed = parseInt(hash.slice(0, 16), 16);
+    shuffleBag.current = new MersenneTwister(seed);
+    if (shuffleBag.current.random() < 0.001) {
+      baby = true;
+      imgs.push(p5.loadImage("./images/Babies/B01.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B02.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B03.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B04.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B05.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B06.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B07.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B08.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B09.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B10.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B11.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B12.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B13.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B14.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B15.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B16.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B17.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B18.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B19.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B20.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B21.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B22.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B23.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B24.jpg"));
+      imgs.push(p5.loadImage("./images/Babies/B25.jpg"));
+    } else {
+      imgs.push(p5.loadImage("./images/Standard/01.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/02.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/03.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/04.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/05.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/06.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/07.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/08.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/09.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/10.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/11.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/12.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/13.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/14.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/15.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/16.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/17.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/18.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/19.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/20.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/21.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/22.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/23.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/24.jpg"));
+      imgs.push(p5.loadImage("./images/Standard/25.jpg"));
+    }
   };
 
   // setup() initializes p5 and the canvas element, can be mostly ignored in our case (check draw())
   const setup = (p5, canvasParentRef) => {
     // Keep reference of canvas element for snapshots
-    let _p5 = p5.createCanvas(width, height).parent(canvasParentRef);
+    p5.createCanvas(width, height).parent(canvasParentRef);
     canvasRef.current = p5;
 
     attributesRef.current = () => {
@@ -180,8 +212,16 @@ const CustomStyle = ({
 
     //Frame
     let off = 5;
-    let weight = 15;
-    p5.fill(0);
+    let weight = 10;
+    if (baby) {
+      p5.fill(234, 170, 221);
+      p5.stroke(234, 170, 221);
+      //p5.fill(226,191,231);
+      //p5.stroke(226,191,231);
+    } else {
+      p5.fill(0);
+      p5.stroke(0);
+    }
     p5.rectMode(p5.CORNERS);
     p5.rect(off, off, width - off, off + weight);
     p5.rect(width - off, off, width - off - weight, height - off);
@@ -189,7 +229,7 @@ const CustomStyle = ({
     p5.rect(off, height - off, off + weight, off);
 
     //Series
-    let textHeight = 12;
+    let textHeight = Math.min(12, weight - 2);
     p5.textSize(textHeight);
     let seriesString = "1/500";
     //let seriesString = norm;
@@ -198,7 +238,12 @@ const CustomStyle = ({
     p5.textFont("Lato");
     p5.textStyle(p5.BOLDITALIC);
     let seriesWidth = p5.textWidth(seriesString);
-    p5.fill(150, 150, 150);
+    if (baby) {
+      p5.fill(50, 50, 50);
+    } else {
+      p5.fill(150, 150, 150);
+    }
+    p5.text("CryptoGhoul", off + weight, height - off - (weight - textHeight));
     p5.text(
       seriesString,
       width - off - weight - seriesWidth,
