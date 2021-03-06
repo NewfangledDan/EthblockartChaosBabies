@@ -31,6 +31,7 @@ Getting started:
 
 let imgs = [];
 let baby = false;
+let ageString = "Adult";
 
 const CustomStyle = ({
   block,
@@ -43,7 +44,7 @@ const CustomStyle = ({
   mod4 = 0.5
 }) => {
   const shuffleBag = useRef();
-  const hoistedValue = useRef();
+  //const hoistedValue = useRef();
 
   const { hash } = block;
   const { parentHash } = block;
@@ -53,6 +54,7 @@ const CustomStyle = ({
     shuffleBag.current = new MersenneTwister(seed);
     if (shuffleBag.current.random() < 0.001) {
       baby = true;
+      ageString = "BABY";
       imgs.push(p5.loadImage("./images/Babies/B01.jpg"));
       imgs.push(p5.loadImage("./images/Babies/B02.jpg"));
       imgs.push(p5.loadImage("./images/Babies/B03.jpg"));
@@ -122,14 +124,8 @@ const CustomStyle = ({
 
         attributes: [
           {
-            display_type: "number",
-            trait_type: "your trait here number",
-            value: hoistedValue.current // using the hoisted value from within the draw() method, stored in the ref.
-          },
-
-          {
-            trait_type: "your trait here text",
-            value: "replace me"
+            trait_type: "AGE",
+            value: ageString
           }
         ]
       };
@@ -235,7 +231,8 @@ const CustomStyle = ({
     //Series
     let textHeight = Math.min(12, weight - 2);
     p5.textSize(textHeight);
-    let seriesString = "1/1000";
+    //let seriesString = "1/1000";
+    let seriesString = "Block# " + String(block.number);
     //let seriesString = norm;
     //let thing = gasUsed/gasLimit;
     //let seriesString = warpVal.toString();
@@ -258,19 +255,7 @@ const CustomStyle = ({
       height - off - (weight - textHeight)
     );
     // example assignment of hoisted value to be used as NFT attribute later
-    hoistedValue.current = 42;
-
-    //if (show) {
-    //  objs.map((dot, i) => {
-    //    p5.stroke(color1);
-    //    p5.strokeWeight(1 + mod2 * 10);
-    //    p5.ellipse(
-    //      200 * dot.y * 6 * M,
-    //      100 * dot.x * 6 * M,
-    //      dot.radius * M * mod1
-    //    );
-    //  });
-    //}
+    //hoistedValue.current = 42;
   };
 
   return (
