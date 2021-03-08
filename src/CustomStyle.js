@@ -41,7 +41,8 @@ const CustomStyle = ({
   height,
   handleResize,
   mod1 = 0.75, // Example: replace any number in the code with mod1, mod2, or color values
-  mod4 = 0.5
+  mod2 = 0.5,
+  mod3 = 0.5
 }) => {
   const shuffleBag = useRef();
   //const hoistedValue = useRef();
@@ -112,7 +113,7 @@ const CustomStyle = ({
   // setup() initializes p5 and the canvas element, can be mostly ignored in our case (check draw())
   const setup = (p5, canvasParentRef) => {
     // Keep reference of canvas element for snapshots
-    p5.createCanvas(width, height).parent(canvasParentRef);
+    let canvas = p5.createCanvas(width, height).parent(canvasParentRef);
     canvasRef.current = p5;
 
     attributesRef.current = () => {
@@ -189,7 +190,7 @@ const CustomStyle = ({
 
     //Saturation
     let final = p5.createImage(imgs[0].width, imgs[0].height);
-    let satVal = -2.0 * mod4 + 1.0;
+    let satVal = -2.0 * mod2 + 1.0;
     final.loadPixels();
     for (let i = 0; i < imageSize; i += 4) {
       let grey =
@@ -207,8 +208,9 @@ const CustomStyle = ({
     }
     final.updatePixels();
 
+    p5.noSmooth();
     p5.background(final);
-    //p5.image(img, 0, 0);
+    p5.filter(p5.BLUR, 3 - 3 * mod3);
 
     //Frame
     let off = 5;
@@ -277,7 +279,8 @@ const styleMetadata = {
   creator_name: "",
   options: {
     mod1: 0.4,
-    mod4: 0.5
+    mod2: 0.5,
+    mod3: 0.5
   }
 };
 
